@@ -1,0 +1,104 @@
+/*browsers include a small margin 
+on the body element by default. 
+To override this -so the background image 
+fills the whole browser - make the body 
+margin 0:*/
+
+body {
+  margin: 0;
+}
+
+/*another browser default we’ll need to 
+override, that of the display property 
+on images being set to inline. If you 
+scroll to the bottom of your page you’ll 
+see there is currently a small white space 
+underneath the image due to this default. 
+Change it by adding:*/
+
+img {
+  display: block;
+}
+
+/*You should now see the “background.svg” 
+image fill up the window flush with the 
+edges, and if you resize the window’s width 
+you’ll see the SVG image rescale itself to 
+suit the new size. The height of the site 
+ayout will also change to maintain the correct 
+aspect ratio for the “background.svg” image.*/
+
+
+/*First, by setting position to absolute we take 
+the element out of the regular document flow, (which
+would otherwise place it below the background image),
+allowing us to place it anywhere we choose.
+Then, we set the top and left properties to 0 which
+shifts the element up to the top of the window and
+horizontally aligns it with our background image.
+After that we give the element a height and width of
+100%. This makes sure the element doesn’t collapse
+down to nothing, hiding any content within it.
+Finally, we set the z-index to 1 which brings the
+element forward so it sits in front of our background
+image (which is on a default z-index of auto). This 
+prevents content inside the element from being obscured 
+by the background image.*/
+
+.foreground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+}
+
+/*we’re giving the element a height of 100% to make sure its content will be visible.*/
+/* We’re setting background-repeat to no-repeat as we only want one UFO to appear, and we’re then making background-position place the image in the center both horizontally and vertically.*/
+/*With our background-size property, we’re setting the width as a percentage based value and allowing the height to be automatically calculated. This width is drawn from the original vector image in which the width of the UFO is approximately 40% the width of the overall illustration.*/
+/*By setting the width of our “ufo.svg” image as a percentage, when the window is resized and the “background.svg” image changes with it, the UFO image will also adjust its width to retain the intended proportions.
+On the final line we set background-attachment to fixed, meaning that the image will stay fixed in place as we scroll, giving us our illusion of descent.*/
+
+.ufo_section {
+  height: 100%;
+  background: url(../images/ufo.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 40% auto;
+  background-attachment: fixed;
+}
+
+/*As you scroll down on your site, once you go down far enough you’ll notice the UFO disappears. This happens because we’re scrolling past the height of the ufo_section panel so at that point we can no longer see its background. */
+
+.comet_section {
+  height: 100%;
+  background: url(../images/alien_comet.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 15% auto;
+  background-attachment: fixed;
+}
+ 
+.landing_section {
+  height: 100%;
+  background: url(../images/alien_landing.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 15% auto;
+  background-attachment: fixed;
+  position: relative;
+}
+
+/*Right now you’ll notice we have a couple of problems to solve when scrolling, and they are:
+
+The three panels are each not high enough. This makes it seem like the alien lander changes from one form into the other too soon so it never makes it to the ground.
+You can see the “alien_comet.svg” image start to emerge before the “ufo.svg” image has fully disappeared, which looks odd.
+Because our “background.svg” image doesn’t have a fixed size we won’t know the exact pixel height each panel should be before loading. However, what we can decide on up front is the height each panel should be as a percentage of the height of “background.svg”.
+
+Using jQuery we can implement this process:
+
+1. Define the height we want each panel to be as a percentage, (or fraction), of the “background.svg” image’s height.
+2. Detect the height of “background.svg” after it loads.
+3. Calculate and set the heights of the panels based on the above two pieces of information.*/
+

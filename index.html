@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Scrolling Alien Lander</title>
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+</head>
+<body>
+ 	<img class="background" src="images/background.svg">
+	
+	<div class="foreground">
+
+		<div class="ufo_section"></div>
+  		<div class="spacer_one"></div>
+  		<div class="comet_section"></div>
+  		<div class="spacer_two"></div>
+  		<div class="landing_section"></div>
+
+	</div>
+ 
+ <!-- While we’re at it, we’ll also add in a couple of extra empty divs to act as spacers in between each panel and set their height using jQuery as well. Adding space in between the panels will make for a smoother transition, solving the problem of seeing the “alien_comet.svg”  image before the “ufo.svg” image is gone. -->
+   
+   	<script>
+		 $(document).ready(function(){
+		  set_section_heights();
+		});
+		 
+		$(window).resize(function(){
+		  set_section_heights();
+		});
+	</script>
+
+</body>
+</html>
